@@ -7,8 +7,8 @@ import { Text, View, StyleSheet } from "react-native";
 import { Task, TaskStatus } from "../types"
 
 export default function Home() {
-  const [tasks, setTasks] = useState<Task[]>([])
-  const [filter, setFilter] = useState('all')
+  const [tasks, setTasks] = useState<Task[]>([]);
+  const [filter, setFilter] = useState<'all' | 'active' | 'completed'>('all');
   /**
    * add a new task
    */
@@ -21,7 +21,7 @@ export default function Home() {
       timeCreated: new Date(),
     };
     setTasks(prev => [newTask, ...prev]);
-  }
+  };
 
   /**
    * delete a task by its id
@@ -29,7 +29,7 @@ export default function Home() {
   const deleteTask = (id: string) => {
     const newTasks = tasks.filter(task => task.id != id)
     setTasks(newTasks)
-  }
+  };
 /**
  * 
  * @param id  task id
@@ -49,11 +49,24 @@ export default function Home() {
     );
   };
 
+  const getFilteredTasks = () => {
+    switch (filter) {
+      case 'all':
+        return tasks
+      case 'completed':
+        return tasks.filter(task => task.status === TaskStatus.COMPLETED)
+      case 'active':
+        return tasks.filter(task => task.status === TaskStatus.PENDING)
+      default:
+        return tasks;
+    }
+  };
+
   return (
     <View style={styles.container}>
       <Text style={styles.header}>TaskManager</Text>
-      {/* <AddTask addTask={addTask} /> */}
-      {/* <TaskList tasks={tasks} deleteTask={deleteTask} toggleTask={toggleTask}/> */}
+      <AddTask addTask={addTask} />
+      {/* <TaskList tasks={getFilteredTasks()} deleteTask={deleteTask} toggleTask={toggleTask}/> */}
       {/* <TaskFilter setFilter={setFilter}/> */}
     </View>
   );
