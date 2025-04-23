@@ -66,7 +66,7 @@ export default function Home() {
     <View style={styles.container}>
       <Text style={styles.header}>TaskManager</Text>
       <AddTask addTask={addTask} />
-      {/* <TaskList tasks={getFilteredTasks()} deleteTask={deleteTask} toggleTask={toggleTask}/> */}
+      <TaskList tasks={getFilteredTasks()} deleteTask={deleteTask} toggleTask={toggleTask}/>
       {/* <TaskFilter setFilter={setFilter}/> */}
     </View>
   );
