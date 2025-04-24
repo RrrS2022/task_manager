@@ -1,5 +1,5 @@
 import { View, Text, StyleSheet, Pressable } from 'react-native';
-import { Task } from '../types';
+import { Task, TaskStatus } from '../types';
 
 /**
  * defines the props for taskItem component
@@ -14,9 +14,14 @@ interface TaskItemProps {
  * TaskItem component receives a task and control functions as props
  */
 export default function TaskItem({ task, toggleTask, deleteTask }: TaskItemProps) {
+  {/* decide text decoration based on task status */}
+  const textStyle = {
+    textDecorationLine: task.status === TaskStatus.COMPLETED ? 'line-through' : 'none' as 'none' | 'line-through',
+  };
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>{task.title}</Text>
+      <Text style={[styles.title, textStyle]}>{task.title}</Text>
+      <Text style={[styles.description, textStyle]}>{task.description}</Text>
       <Text style={styles.status}>Status: {task.status}</Text>
       <View style={styles.buttons}>
         {/* button to toggle task status */}
@@ -42,6 +47,10 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 16,
     fontWeight: '600',
+  },
+  description: {
+    color: '#555',
+    marginBottom: 4,
   },
   status: {
     fontStyle: 'italic',

@@ -5,6 +5,7 @@ import { useStateForPath } from "@react-navigation/native";
 import { useState } from "react";
 import { Text, View, StyleSheet } from "react-native";
 import { Task, TaskStatus } from "../types"
+import { ScrollView } from "react-native";
 
 export default function Home() {
   const [tasks, setTasks] = useState<Task[]>([]);
@@ -65,9 +66,14 @@ export default function Home() {
   return (
     <View style={styles.container}>
       <Text style={styles.header}>TaskManager</Text>
-      <AddTask addTask={addTask} />
-      <TaskList tasks={getFilteredTasks()} deleteTask={deleteTask} toggleTask={toggleTask}/>
-      {/* <TaskFilter setFilter={setFilter}/> */}
+      <ScrollView contentContainerStyle={styles.scrollContent}>
+        <AddTask addTask={addTask} />
+        <TaskList 
+          tasks={getFilteredTasks()} 
+          deleteTask={deleteTask} 
+          toggleTask={toggleTask}/>
+        <TaskFilter setFilter={setFilter}/>
+      </ScrollView>
     </View>
   );
 }
@@ -82,5 +88,8 @@ const styles = StyleSheet.create({
     fontSize: 24,
     fontWeight: "bold",
     marginBottom: 16,
+  },
+  scrollContent: {
+    paddingBottom: 60, 
   },
 });
