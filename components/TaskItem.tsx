@@ -1,5 +1,6 @@
 import { View, Text, StyleSheet, Pressable } from 'react-native';
 import { Task, TaskStatus } from '../types';
+import { useRouter } from 'expo-router';
 
 /**
  * defines the props for taskItem component
@@ -18,22 +19,27 @@ export default function TaskItem({ task, toggleTask, deleteTask }: TaskItemProps
   const textStyle = {
     textDecorationLine: task.status === TaskStatus.COMPLETED ? 'line-through' : 'none' as 'none' | 'line-through',
   };
+
+  const router  = useRouter();
   return (
-    <View style={styles.container}>
-      <Text style={[styles.title, textStyle]}>{task.title}</Text>
-      <Text style={[styles.description, textStyle]}>{task.description}</Text>
-      <Text style={styles.status}>Status: {task.status}</Text>
-      <View style={styles.buttons}>
-        {/* button to toggle task status */}
-        <Pressable style={styles.button} onPress={() => toggleTask(task.id)}>
-          <Text style={styles.buttonText}>Toggle</Text>
-        </Pressable>
-        {/* button to delete the task*/}
-        <Pressable style={[styles.button, styles.deleteButton]} onPress={() => deleteTask(task.id)}>
-          <Text style={styles.buttonText}>Delete</Text>
-        </Pressable>
+    <Pressable onPress={() => router.push(`/task/${task.id}`)}>
+      <View style={styles.container}>
+        <Text style={[styles.title, textStyle]}>{task.title}</Text>
+        <Text style={[styles.description, textStyle]}>{task.description}</Text>
+        <Text style={styles.status}>Status: {task.status}</Text>
+        <View style={styles.buttons}>
+          {/* button to toggle task status */}
+          <Pressable style={styles.button} onPress={() => toggleTask(task.id)}>
+            <Text style={styles.buttonText}>Toggle</Text>
+          </Pressable>
+          {/* button to delete the task*/}
+          <Pressable style={[styles.button, styles.deleteButton]} onPress={() => deleteTask(task.id)}>
+            <Text style={styles.buttonText}>Delete</Text>
+          </Pressable>
+        </View>
       </View>
-    </View>
+    </Pressable>
+
   );
 }
 
