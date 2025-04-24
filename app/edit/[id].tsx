@@ -29,6 +29,7 @@ export default function EditTask() {
     );
   }
 
+  // save the change 
   const handleSave = () => {
     if (title.trim() === '') {
       Alert.alert('Validation Error', 'Title cannot be empty');
@@ -41,6 +42,7 @@ export default function EditTask() {
 
   return (
     <View style={styles.container}>
+    {/** if no change has been made, click back button */}
       <Pressable onPress={() => router.back()} style={styles.backButton}>
         <Text style={styles.backText}>← Back</Text>
       </Pressable>

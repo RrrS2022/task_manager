@@ -8,6 +8,7 @@ export default function TaskDetail() {
     const { id } = useLocalSearchParams<{ id: string }>();
 
     const { tasks, toggleTask, deleteTask } = useTasks();
+    
     // use router to go back or push to anaother screen
     const router = useRouter();
 
@@ -22,7 +23,7 @@ export default function TaskDetail() {
 
     }
 
-      // Confirm before deleting a task
+      // Confirm before deleting a task 
     const handleDelete = () => {
         Alert.alert(
         'Delete Task',

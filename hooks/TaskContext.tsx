@@ -46,6 +46,7 @@ export const TasksProvider = ({ children }: { children: React.ReactNode }) => {
     );
   };
 
+  // replace the title and description of the task that matches the given id
   const updateTask = (
     id: string,
     updated: { title: string; description: string }
