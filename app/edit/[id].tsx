@@ -1,5 +1,5 @@
 import { useLocalSearchParams, useRouter } from 'expo-router';
-import { View, Text, TextInput, StyleSheet, Button, Alert } from 'react-native';
+import { View, Text, TextInput, StyleSheet, Button, Alert, Pressable } from 'react-native';
 import { useTasks } from '@/hooks/TaskContext';
 import { useEffect, useState } from 'react';
 
@@ -41,6 +41,9 @@ export default function EditTask() {
 
   return (
     <View style={styles.container}>
+      <Pressable onPress={() => router.back()} style={styles.backButton}>
+        <Text style={styles.backText}>← Back</Text>
+      </Pressable>
       <Text style={styles.label}>Edit Task</Text>
 
       <TextInput
@@ -69,6 +72,13 @@ const styles = StyleSheet.create({
     padding: 20,
     flex: 1,
     backgroundColor: '#fff',
+  },
+  backButton: {
+    marginBottom: 12,
+  },
+  backText: {
+    color: '#007bff',
+    fontSize: 16,
   },
   label: {
     fontSize: 22,
