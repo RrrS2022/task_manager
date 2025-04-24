@@ -1,17 +1,22 @@
 import { useState } from "react";
 import { View, TextInput, Button, StyleSheet } from "react-native";
 
+// defines the expected props for AddTask component
 interface AddTaskProps {
   addTask: (title: string, description: string) => void;
 }
 
 export default function AddTask({ addTask }: AddTaskProps) {
+  // manage the values typed into text inputs for title and description
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
 
   const handleSubmit = () => {
+    // prevent adding empty tasks
     if (title.trim() === "") return;
+    // call the function passed in as a prop and update the global task list
     addTask(title, description);
+    // clears the inputs after successful suubmission
     setTitle("");
     setDescription("");
   };
@@ -21,7 +26,7 @@ export default function AddTask({ addTask }: AddTaskProps) {
       <TextInput
         placeholder="Enter task title"
         value={title}
-        onChangeText={setTitle}
+        onChangeText={setTitle} // update the local state as the user types
         style={styles.input}
       />
       <TextInput
