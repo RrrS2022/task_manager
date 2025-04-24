@@ -1,13 +1,14 @@
-import { useState } from 'react';
+import { createContext, useContext, useState } from 'react';
 import { Task, TaskStatus } from '../types';
 import { INITIAL_TASKS } from '../data/mockdata';
 
-export const useTasks = () => {
+// 1. Create context
+const TasksContext = createContext<any>(null);
+
+// 2. Create provider component
+export const TasksProvider = ({ children }: { children: React.ReactNode }) => {
   const [tasks, setTasks] = useState<Task[]>(INITIAL_TASKS);
 
-  /**
-   * Add a new task
-   */
   const addTask = (title: string, description: string) => {
     const newTask: Task = {
       id: Date.now().toString(),
@@ -19,16 +20,10 @@ export const useTasks = () => {
     setTasks(prev => [newTask, ...prev]);
   };
 
-  /**
-   * Delete a task by its id
-   */
   const deleteTask = (id: string) => {
     setTasks(prev => prev.filter(task => task.id !== id));
   };
 
-  /**
-   * Toggle task status
-   */
   const toggleTask = (id: string) => {
     setTasks(prev =>
       prev.map(task =>
@@ -45,27 +40,25 @@ export const useTasks = () => {
     );
   };
 
-  /**
-   * Update task title/description
-   */
-  const updateTask = (id: string, updatedData: Partial<Omit<Task, 'id' | 'status' | 'timeCreated'>>) => {
+  const updateTask = (
+    id: string,
+    updated: { title: string; description: string }
+  ) => {
     setTasks(prev =>
       prev.map(task =>
-        task.id === id
-          ? {
-              ...task,
-              ...updatedData,
-            }
-          : task
+        task.id === id ? { ...task, ...updated } : task
       )
     );
   };
 
-  return {
-    tasks,
-    addTask,
-    deleteTask,
-    toggleTask,
-    updateTask,
-  };
+  return (
+    <TasksContext.Provider
+      value={{ tasks, addTask, deleteTask, toggleTask, updateTask }}
+    >
+      {children}
+    </TasksContext.Provider>
+  );
 };
+
+// 3. Export context hook
+export const useTasks = () => useContext(TasksContext);

@@ -1,5 +1,10 @@
-import { Stack } from "expo-router";
+import { TasksProvider } from "@/hooks/TaskContext";
+import { Slot, Stack } from "expo-router";
 
 export default function RootLayout() {
-  return <Stack />;
+  return (
+    <TasksProvider>
+      <Slot />
+    </TasksProvider>
+  );
 }

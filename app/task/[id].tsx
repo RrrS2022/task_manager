@@ -1,4 +1,4 @@
-import { useTasks } from "@/hooks/useTasks";
+import { useTasks } from "@/hooks/TaskContext";
 import { Task, TaskStatus } from "@/types";
 import { useLocalSearchParams, useRouter } from "expo-router";
 import { View, Text, StyleSheet, Alert, Pressable } from "react-native";
@@ -11,7 +11,7 @@ export default function TaskDetail() {
     // use router to go back or push to anaother screen
     const router = useRouter();
 
-    const task = tasks.find(task => task.id === id);
+    const task = tasks.find((task: { id: string; }) => task.id === id);
 
     if (!task) {
         return (
@@ -43,53 +43,52 @@ export default function TaskDetail() {
 
     return (
         <View style={styles.container}>
-        {/* Display task title */}
-        <Text style={styles.title}>{task.title}</Text>
-  
-        {/* Display task description */}
-        <Text style={styles.description}>{task.description}</Text>
-  
-        {/* Show status and created time */}
-        <Text style={styles.meta}>Status: {task.status}</Text>
-        <Text style={styles.meta}>
-          Created: {task.timeCreated.toLocaleString()}
-        </Text>
-  
-        {/* Action buttons: Toggle / Edit / Delete */}
-        <View style={styles.buttonGroup}>
-          {/* Toggle button: change status between pending/completed */}
-          <Pressable
-            style={[
-              styles.button,
-              task.status === TaskStatus.COMPLETED && styles.pendingButton,
-            ]}
-            onPress={() => {
-              toggleTask(task.id); // toggle status
-              router.back();       // go back after toggle (optional)
-            }}
-          >
-            <Text style={styles.buttonText}>
-              {task.status === TaskStatus.PENDING ? 'Mark as Completed' : 'Mark as Pending'}
+            <Pressable onPress={() => router.back()} style={styles.backButton}>
+                <Text style={styles.backText}>← Back</Text>
+            </Pressable>
+            {/* Display task detials */}
+            <Text style={styles.title}>{task.title}</Text>
+            <Text style={styles.description}>{task.description}</Text>
+            <Text style={styles.meta}>Status: {task.status}</Text>
+            <Text style={styles.meta}>
+            Created: {task.timeCreated.toLocaleString()}
             </Text>
-          </Pressable>
-  
-          {/* Edit button: navigate to edit screen */}
-          <Pressable
-            style={[styles.button, styles.editButton]}
-            onPress={() => router.push(`/edit/${task.id}`)}
-          >
-            <Text style={styles.buttonText}>Edit</Text>
-          </Pressable>
-  
-          {/* Delete button: open confirmation dialog */}
-          <Pressable
-            style={[styles.button, styles.deleteButton]}
-            onPress={handleDelete}
-          >
-            <Text style={styles.buttonText}>Delete</Text>
-          </Pressable>
+    
+            {/* Action buttons: Toggle / Edit / Delete */}
+            <View style={styles.buttonGroup}>
+                {/* Toggle button: change status between pending/completed */}
+                <Pressable
+                    style={[
+                    styles.button,
+                    task.status === TaskStatus.COMPLETED && styles.pendingButton,
+                    ]}
+                    onPress={() => {
+                    toggleTask(task.id); // toggle status
+                    router.back();       // go back after toggle (optional)
+                    }}
+                >
+                    <Text style={styles.buttonText}>
+                    {task.status === TaskStatus.PENDING ? 'Mark as Completed' : 'Mark as Pending'}
+                    </Text>
+                </Pressable>
+        
+                {/* Edit button: navigate to edit screen */}
+                <Pressable
+                    style={[styles.button, styles.editButton]}
+                    onPress={() => router.push(`/edit/${task.id}`)}
+                >
+                    <Text style={styles.buttonText}>Edit</Text>
+                </Pressable>
+        
+                {/* Delete button: open confirmation dialog */}
+                <Pressable
+                    style={[styles.button, styles.deleteButton]}
+                    onPress={handleDelete}
+                >
+                    <Text style={styles.buttonText}>Delete</Text>
+                </Pressable>
+            </View>
         </View>
-      </View>
     );
     
 }
@@ -101,6 +100,13 @@ const styles = StyleSheet.create({
       flex: 1,
       justifyContent: 'flex-start',
       backgroundColor: '#fff',
+    },
+    backButton: {
+        marginBottom: 16,
+      },
+    backText: {
+    fontSize: 16,
+    color: '#007bff',
     },
     notFound: {
       fontSize: 18,

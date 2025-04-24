@@ -7,7 +7,7 @@ import { Text, View, StyleSheet } from "react-native";
 import { Task, TaskStatus } from "../types"
 import { ScrollView } from "react-native";
 import { INITIAL_TASKS } from "@/data/mockdata";
-import { useTasks } from "@/hooks/useTasks";
+import { useTasks } from "@/hooks/TaskContext";
 
 export default function Home() {
   // const [tasks, setTasks] = useState<Task[]>(INITIAL_TASKS);
@@ -25,9 +25,9 @@ export default function Home() {
       case 'all':
         return tasks
       case 'completed':
-        return tasks.filter(task => task.status === TaskStatus.COMPLETED)
+        return tasks.filter((task: { status: TaskStatus; }) => task.status === TaskStatus.COMPLETED)
       case 'active':
-        return tasks.filter(task => task.status === TaskStatus.PENDING)
+        return tasks.filter((task: { status: TaskStatus; }) => task.status === TaskStatus.PENDING)
       default:
         return tasks;
     }

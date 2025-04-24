@@ -1,6 +1,6 @@
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import { View, Text, TextInput, StyleSheet, Button, Alert } from 'react-native';
-import { useTasks } from '@/hooks/useTasks';
+import { useTasks } from '@/hooks/TaskContext';
 import { useEffect, useState } from 'react';
 
 export default function EditTask() {
@@ -8,7 +8,7 @@ export default function EditTask() {
   const { tasks, updateTask } = useTasks();
   const router = useRouter();
 
-  const task = tasks.find(task => task.id === id);
+  const task = tasks.find((task: { id: string; }) => task.id === id);
 
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
