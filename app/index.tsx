@@ -8,6 +8,7 @@ import { Task, TaskStatus } from "../types"
 import { ScrollView } from "react-native";
 import { INITIAL_TASKS } from "@/data/mockdata";
 import { useTasks } from "@/hooks/TaskContext";
+import SearchBar from "@/components/SearchBar";
 
 export default function Home() {
   // const [tasks, setTasks] = useState<Task[]>(INITIAL_TASKS);
@@ -18,24 +19,34 @@ export default function Home() {
     addTask,
     deleteTask,
     toggleTask,
+    searchQuery,
   } = useTasks();
 
   const getFilteredTasks = () => {
-    switch (filter) {
-      case 'all':
-        return tasks
-      case 'completed':
-        return tasks.filter((task: { status: TaskStatus; }) => task.status === TaskStatus.COMPLETED)
-      case 'active':
-        return tasks.filter((task: { status: TaskStatus; }) => task.status === TaskStatus.PENDING)
-      default:
-        return tasks;
+    let filtered = tasks;
+
+    // 1. Filter by status
+    if (filter === 'active') {
+      filtered = filtered.filter((task: { status: TaskStatus; }) => task.status === TaskStatus.PENDING);
+    } else if (filter === 'completed') {
+      filtered = filtered.filter((task: { status: TaskStatus; }) => task.status === TaskStatus.COMPLETED);
     }
+
+    // 2. Filter by search query (case-insensitive)
+    if (searchQuery.trim() !== '') {
+      const query = searchQuery.toLowerCase();
+      filtered = filtered.filter((task: { title: string; }) =>
+        task.title.toLowerCase().includes(query)
+      );
+    }
+
+    return filtered;
   };
 
   return (
     <View style={styles.container}>
       <Text style={styles.header}>TaskManager</Text>
+      <SearchBar />
       <ScrollView contentContainerStyle={styles.scrollContent}>
         <AddTask addTask={addTask} />
         <TaskList 

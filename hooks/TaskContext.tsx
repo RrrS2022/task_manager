@@ -29,12 +29,12 @@ export const TasksProvider = ({ children }: { children: React.ReactNode }) => {
       prev.map(task =>
         task.id === id
           ? {
-              ...task,
-              status:
-                task.status === TaskStatus.PENDING
-                  ? TaskStatus.COMPLETED
-                  : TaskStatus.PENDING,
-            }
+            ...task,
+            status:
+              task.status === TaskStatus.PENDING
+                ? TaskStatus.COMPLETED
+                : TaskStatus.PENDING,
+          }
           : task
       )
     );
@@ -51,14 +51,26 @@ export const TasksProvider = ({ children }: { children: React.ReactNode }) => {
     );
   };
 
+  const [searchQuery, setSearchQuery ] = useState('');
+  const filteredTasks = tasks.filter(task =>
+    task.title.toLowerCase().includes(searchQuery.toLowerCase()))
+
   return (
     <TasksContext.Provider
-      value={{ tasks, addTask, deleteTask, toggleTask, updateTask }}
+      value={{ tasks, filteredTasks, searchQuery, setSearchQuery, addTask, deleteTask, toggleTask, updateTask }}
     >
       {children}
     </TasksContext.Provider>
   );
+
+  
 };
 
 // 3. Export context hook
-export const useTasks = () => useContext(TasksContext);
+export const useTasks = () => {
+  const context = useContext(TasksContext);
+  if (!context) {
+    throw new Error('useTasks must be used within a TasksProvider');
+  }
+  return context;
+};
