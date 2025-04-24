@@ -2,28 +2,34 @@ import { createContext, useContext, useState } from 'react';
 import { Task, TaskStatus } from '../types';
 import { INITIAL_TASKS } from '../data/mockdata';
 
-// 1. Create context
+// set up an empty context with a default value null
 const TasksContext = createContext<any>(null);
 
-// 2. Create provider component
+// Create provider component, children refers to all nested components inside the provider
 export const TasksProvider = ({ children }: { children: React.ReactNode }) => {
+  // hold current list of tasks
   const [tasks, setTasks] = useState<Task[]>(INITIAL_TASKS);
 
+  // generate a new task object using the passed in title and decription
   const addTask = (title: string, description: string) => {
     const newTask: Task = {
-      id: Date.now().toString(),
+      id: Date.now().toString(), // create a unique id
       title,
       description,
-      status: TaskStatus.PENDING,
+      status: TaskStatus.PENDING, // set deault status to pending
       timeCreated: new Date(),
-    };
+    }; 
+    // add the new task to the top of the task list
     setTasks(prev => [newTask, ...prev]);
   };
 
+  // filters out the task with the matching id
   const deleteTask = (id: string) => {
+    // update the state with the new array
     setTasks(prev => prev.filter(task => task.id !== id));
   };
 
+  // find the task with the matching id and toggle its status
   const toggleTask = (id: string) => {
     setTasks(prev =>
       prev.map(task =>
@@ -66,7 +72,7 @@ export const TasksProvider = ({ children }: { children: React.ReactNode }) => {
   
 };
 
-// 3. Export context hook
+// Export context hook
 export const useTasks = () => {
   const context = useContext(TasksContext);
   if (!context) {
