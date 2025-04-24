@@ -1,6 +1,6 @@
 import { Task, TaskStatus } from "../types";
 
-export const mockTask: Task[] = [
+export const INITIAL_TASKS: Task[] = [
     {
         id: "1",
         title: "setup", 

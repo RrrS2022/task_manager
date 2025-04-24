@@ -6,49 +6,19 @@ import { useState } from "react";
 import { Text, View, StyleSheet } from "react-native";
 import { Task, TaskStatus } from "../types"
 import { ScrollView } from "react-native";
+import { INITIAL_TASKS } from "@/data/mockdata";
+import { useTasks } from "@/hooks/useTasks";
 
 export default function Home() {
-  const [tasks, setTasks] = useState<Task[]>([]);
+  // const [tasks, setTasks] = useState<Task[]>(INITIAL_TASKS);
   const [filter, setFilter] = useState<'all' | 'active' | 'completed'>('all');
-  /**
-   * add a new task
-   */
-  const addTask = (title: string, description: string) => {
-    const newTask: Task = {
-      id: Date.now().toString(),
-      title,
-      description,
-      status: TaskStatus.PENDING,
-      timeCreated: new Date(),
-    };
-    setTasks(prev => [newTask, ...prev]);
-  };
-
-  /**
-   * delete a task by its id
-   */
-  const deleteTask = (id: string) => {
-    const newTasks = tasks.filter(task => task.id != id)
-    setTasks(newTasks)
-  };
-/**
- * 
- * @param id  task id
- * find the task, flip its status (pending <-> completed)
- */
-  const toggleTask = (id: string) => {
-    setTasks(prevTasks => prevTasks.map(task =>
-      task.id === id
-      ? {
-        ...task,
-        status: 
-          task.status ===TaskStatus.PENDING
-            ? TaskStatus.COMPLETED
-            : TaskStatus.PENDING
-      } : task
-      )
-    );
-  };
+  
+  const {
+    tasks,
+    addTask,
+    deleteTask,
+    toggleTask,
+  } = useTasks();
 
   const getFilteredTasks = () => {
     switch (filter) {
