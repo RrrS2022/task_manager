@@ -1,50 +1,30 @@
-# Welcome to your Expo app 👋
+# TaskManager App
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+A simple task management mobile app built with React Native and Expo. This app allows users to manage their daily tasks by adding, editing, deleting, and toggling task status, with support for dynamic detail views and search functionality.
 
-## Get started
+---
 
-1. Install dependencies
+## ✨ Features
 
-   ```bash
-   npm install
-   ```
+- 📋 **Task List**: Displays a list of tasks using hard-coded mock data.
+- ➕ **Add Tasks**: Input form for adding new tasks with a title and description.
+- 📝 **Edit Tasks**: Update task title and description via a dedicated edit screen.
+- ✅ **Toggle Status**: Mark tasks as completed or pending.
+- 🗑️ **Delete Tasks**: Remove tasks from the list.
+- 🔍 **Search Tasks**: Filter tasks by title in real-time.
+- 🔙 **Detail View**: Navigate to a full task detail screen with action buttons.
+- 📱 **Mobile Friendly**: Smooth experience on both Android and iOS devices.
 
-2. Start the app
+---
 
-   ```bash
-    npx expo start
-   ```
+## 🛠 Tech Stack
 
-In the output, you'll find options to open the app in a
+- **React Native** (latest stable)
+- **Expo SDK** with `expo-router` for routing
+- **TypeScript** for type safety
+- **React Context** for shared state management
+- **Hooks**: `useState`, `useEffect`, `useContext`, and `useLocalSearchParams`
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+---
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
 
-## Get a fresh project
-
-When you're ready, run:
-
-```bash
-npm run reset-project
-```
-
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
-
-## Learn more
-
-To learn more about developing your project with Expo, look at the following resources:
-
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
-
-## Join the community
-
-Join our community of developers creating universal apps.
-
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
