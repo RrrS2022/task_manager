@@ -25,7 +25,7 @@ export default function Home() {
   const getFilteredTasks = () => {
     let filtered = tasks;
 
-    // 1. Filter by status
+    // Filter by status
     if (filter === 'active') {
       filtered = filtered.filter((task: { status: TaskStatus; }) => task.status === TaskStatus.PENDING);
     } else if (filter === 'completed') {
