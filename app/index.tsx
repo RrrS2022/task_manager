@@ -32,7 +32,7 @@ export default function Home() {
       filtered = filtered.filter((task: { status: TaskStatus; }) => task.status === TaskStatus.COMPLETED);
     }
 
-    // 2. Filter by search query (case-insensitive)
+    // Filter by search query (case-insensitive)
     if (searchQuery.trim() !== '') {
       const query = searchQuery.toLowerCase();
       filtered = filtered.filter((task: { title: string; }) =>
