@@ -65,7 +65,7 @@ export default function TaskDetail() {
                     ]}
                     onPress={() => {
                     toggleTask(task.id); // toggle status
-                    router.back();       // go back after toggle (optional)
+                    router.back();       // go back after toggle 
                     }}
                 >
                     <Text style={styles.buttonText}>
